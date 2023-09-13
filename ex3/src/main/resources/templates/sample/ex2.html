@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <ul>
+
+      <p>반복문 처리=====================================</p>
+    <li th:each="dto :${list}"><!--주석 확인-->
+      [[${dto}]]<!--주석 확인-->
+    </li>
+      <p>반복문 state=====================================</p>
+    <li th:each="dto, states :${list}">
+      [[${states.index}]] --- [[${dto}]]
+    </li>
+      <p>제어문 처리 : 5의 배수만 출력=====================================</p>
+    <li th:each="dto, states :${list}" th:if="${dto.sno % 5==0}">
+      [[${dto}]]
+    </li>
+      <p>제어문 처리 : 5로 나눈 나머지 0인 경우 sno만 출력, 아니면 first 출력=====================================</p>
+      <li th:each="dto, states :${list}" >
+          <span th:if="${dto.sno%5==0}" th:text="${'--------------' + dto.sno}"></span>
+          <span th:unless="${dto.sno%5==0}" th:text="${dto.first}"></span>
+      </li>
+  </ul>
+</body>
+</html><!--주석 확인-->
+<!--주석 확인-->
