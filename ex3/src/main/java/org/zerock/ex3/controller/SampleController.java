@@ -25,41 +25,51 @@ public class SampleController {
         //html코드는 templates 아래에 sample 폴더에 작성 *jsp는 views 아래에 작성했었다.
     }
 
-    @GetMapping({"/ex2"})
+    @GetMapping({"/ex2", "/exLink"})
     public void exModel(Model model){
-        List<SampleDTO> list = IntStream.rangeClosed(1,20).asLongStream().
-                mapToObj(i -> {
-                    SampleDTO dto = SampleDTO.builder()
+
+        List<SampleDTO> list = IntStream.rangeClosed(1,20).asLongStream().mapToObj(i -> {
+            SampleDTO dto = SampleDTO.builder()
                     .sno(i)
-                    .first("First.." + i)
-                    .last("Last.." + i)
+                    .first("First.."+i)
+                    .last("Last.."+i)
                     .regTime(LocalDateTime.now())
                     .build();
-                    return dto;
+            return dto;
         }).collect(Collectors.toList());
+
         model.addAttribute("list", list);
     }
 
     @GetMapping({"/exInline"})
     public String exInline(RedirectAttributes redirectAttributes){
-        log.info("exInline..........................");
+
+        log.info("exInline..............");
 
         SampleDTO dto = SampleDTO.builder()
                 .sno(100L)
-                .first("First...100")
-                .last("Last...100")
+                .first("First..100")
+                .last("Last..100")
                 .regTime(LocalDateTime.now())
                 .build();
         redirectAttributes.addFlashAttribute("result", "success");
         redirectAttributes.addFlashAttribute("dto", dto);
 
+
         return "redirect:/sample/ex3";
     }
 
     @GetMapping("/ex3")
-    public void ex3(){
+    public void ex3() {
 
         log.info("ex3");
     }
+
+    @GetMapping({"/exLayout1","/exLayout2", "/exTemplate","/exSidebar"})
+    public void exLayout1(){
+        log.info("exLayout............");
+    }
+
+
 }
 //SampleDTO 타입 객체 20개 추가, Model에 담아 전송

@@ -6,12 +6,14 @@
 </head>
 <body>
 
-    <h1 th:text="${result}"></h1>
-    <h1 th:text="${dto}"></h1>
+<h1 th:text="${result}"></h1>
+<h1 th:text="${dto}"></h1>
 
-    <script th:inline="javascript">
-        var msg = [[${result}]];
-        var dto = [[${dto }]];
-    </script>
+<script th:inline="javascript">
+
+    var msg = [[${result}]];
+    var dto = [[${dto}]];
+</script>
+
 </body>
 </html>
