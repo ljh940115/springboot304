@@ -7,6 +7,7 @@ import org.zerock.board.entity.Board;
 import org.zerock.board.entity.Member;
 import org.zerock.board.entity.Reply;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -47,5 +48,12 @@ public class ReplyRepositoryTests {
         //컴퓨터 입장에서 과부하
     }
 
+    @Test
+    public void testListByBoard(){
+        List<Reply> replyList = replyRepository.getRepliesByBoardOrderByRno(
+                Board.builder().bno(97L).build());
+
+        replyList.forEach(reply -> System.out.println(reply));
+    }
 
 }

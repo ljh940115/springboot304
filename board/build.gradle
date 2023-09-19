@@ -1,8 +1,15 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}//쿼리dsl 관련 설정 추가
+
 plugins {
     id 'java'
     id 'war'
     id 'org.springframework.boot' version '2.7.16-SNAPSHOT'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10' //쿼리dsl 관련 설정 추가
 }
 
 group = 'org.zerock'
@@ -38,8 +45,32 @@ dependencies {
     // 타임리프에서 날짜시간 포멧팅 담당 https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-java8time
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time', version: '3.0.4.RELEASE'
 
+    //일단 제외 : 28행에 있는 것 사용 ->compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client'
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+    //쿼리dsl 관련 설정 추가
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+//쿼리dsl 관련 설정 추가
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+
+sourceSets {
+    main.java.srcDir querydslDir
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
 }

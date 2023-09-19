@@ -19,6 +19,6 @@ public class Reply extends BaseEntity{//댓글 입력, 수정일 사용을 위�
     private String replyer;
     
     //board 연관관계
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 }
